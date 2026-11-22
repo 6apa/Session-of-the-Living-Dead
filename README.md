@@ -7,9 +7,8 @@
 - GDScript
 
 ## Команда👩🏻‍💻
-- S1dorok
-- 6apa
 
 <!-- CONTRIBUTORS_STATS:START -->
 - Vladimir Sidorov (`S1dorok`) — **50.0%** (8 коммитов)
-- Бара (`6apa`) — **50.0%** (8 коммитов)<!-- CONTRIBUTORS_STATS:END -->
+- Бара (`6apa`) — **50.0%** (8 коммитов)
+<!-- CONTRIBUTORS_STATS:END -->
