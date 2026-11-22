@@ -11,4 +11,6 @@
 - 6apa
 
 <!-- CONTRIBUTORS_STATS:START -->
+- Vladimir Sidorov (`S1dorok`) — ...%
+- Бара (`6apa`) — ...%
 <!-- CONTRIBUTORS_STATS:END -->
