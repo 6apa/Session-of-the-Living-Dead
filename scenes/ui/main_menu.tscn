@@ -1,0 +1,90 @@
+[gd_scene format=3 uid="uid://d4ms1o5i1s6ns"]
+
+[ext_resource type="Texture2D" uid="uid://c5kftgqp2v260" path="res://assets/ui/MainMenu.jpg" id="1_sl1te"]
+
+[node name="MainMenu" type="Control" unique_id=136594581]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainMenu" type="Sprite2D" parent="." unique_id=869488048]
+position = Vector2(962.5, 543.5)
+scale = Vector2(1.3989826, 1.404948)
+texture = ExtResource("1_sl1te")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1588720298]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 100.0
+offset_top = -222.25
+offset_right = 612.0
+offset_bottom = 238.75
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="Название" type="Label" parent="VBoxContainer" unique_id=2055225763]
+layout_mode = 2
+offset_transform_enabled = true
+theme_override_font_sizes/font_size = 42
+text = "Session of the living dead
+"
+horizontal_alignment = 1
+
+[node name="Продолжить" type="Button" parent="VBoxContainer" unique_id=1832672728]
+layout_mode = 2
+offset_transform_enabled = true
+theme_override_constants/h_separation = 10
+theme_override_font_sizes/font_size = 32
+text = "Продолжить"
+flat = true
+autowrap_trim_flags = 192
+
+[node name="Новая игра" type="Button" parent="VBoxContainer" unique_id=233224670]
+layout_mode = 2
+offset_transform_enabled = true
+theme_override_constants/h_separation = 10
+theme_override_font_sizes/font_size = 32
+text = "Новая игра"
+flat = true
+autowrap_trim_flags = 192
+
+[node name="Загрузить" type="Button" parent="VBoxContainer" unique_id=2036504708]
+layout_mode = 2
+offset_transform_enabled = true
+theme_override_constants/h_separation = 10
+theme_override_font_sizes/font_size = 32
+text = "Загрузить"
+flat = true
+autowrap_trim_flags = 192
+
+[node name="Настройки" type="Button" parent="VBoxContainer" unique_id=452494145]
+layout_mode = 2
+offset_transform_enabled = true
+theme_override_constants/h_separation = 10
+theme_override_font_sizes/font_size = 32
+text = "Настройки"
+flat = true
+autowrap_trim_flags = 192
+
+[node name="Об авторах" type="Button" parent="VBoxContainer" unique_id=1336585772]
+layout_mode = 2
+offset_transform_enabled = true
+theme_override_constants/h_separation = 10
+theme_override_font_sizes/font_size = 32
+text = "Об авторах"
+flat = true
+autowrap_trim_flags = 192
+
+[node name="Выход" type="Button" parent="VBoxContainer" unique_id=2021290395]
+layout_mode = 2
+offset_transform_enabled = true
+theme_override_constants/h_separation = 10
+theme_override_font_sizes/font_size = 32
+text = "Выход"
+flat = true
+autowrap_trim_flags = 192
