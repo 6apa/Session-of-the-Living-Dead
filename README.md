@@ -11,4 +11,5 @@
 - 6apa
 
 <!-- CONTRIBUTORS_STATS:START -->
-<!-- CONTRIBUTORS_STATS:END -->
+- Vladimir Sidorov (`S1dorok`) — **50.0%** (8 коммитов)
+- Бара (`6apa`) — **50.0%** (8 коммитов)<!-- CONTRIBUTORS_STATS:END -->
