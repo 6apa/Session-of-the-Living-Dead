@@ -2,7 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dcvwbgf4nlwk5" path="res://scenes/ui/main_menu.gd" id="1_fe2o3"]
 [ext_resource type="Texture2D" uid="uid://c5kftgqp2v260" path="res://assets/ui/MainMenu.jpg" id="1_sl1te"]
-[ext_resource type="PackedScene" uid="uid://duyevq05l72n1" path="res://scenes/levels/main.tscn" id="2_1g8jr"]
+[ext_resource type="PackedScene" uid="uid://duyevq05l72n1" path="res://scenes/levels/main.tscn" id="2_m1kxf"]
+[ext_resource type="AudioStream" uid="uid://cttr82tg8wkuf" path="res://assets/audio/zombie_start_scream.mp3" id="4_m1kxf"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q85j6"]
 
@@ -124,6 +125,8 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
 
+[sub_resource type="Theme" id="Theme_m1kxf"]
+
 [node name="MainMenu" type="Control" unique_id=136594581]
 layout_mode = 3
 anchors_preset = 15
@@ -132,12 +135,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fe2o3")
-game_scene = ExtResource("2_1g8jr")
+game_scene = ExtResource("2_m1kxf")
 
 [node name="MainMenu" type="Sprite2D" parent="." unique_id=869488048]
 position = Vector2(962.5, 543.5)
 scale = Vector2(1.3989826, 1.404948)
 texture = ExtResource("1_sl1te")
+
+[node name="StartGameSound" type="AudioStreamPlayer2D" parent="." unique_id=807410073]
+stream = ExtResource("4_m1kxf")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1588720298]
 layout_mode = 1
@@ -248,3 +254,19 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_n4uci")
 theme_override_styles/hover = SubResource("StyleBoxFlat_q85j6")
 text = "Выход"
 autowrap_trim_flags = 192
+
+[node name="ContributorsRequest" type="HTTPRequest" parent="." unique_id=1808536745]
+
+[node name="CreditsPanel" type="PanelContainer" parent="." unique_id=384286424]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_m1kxf")
+
+[node name="CreditsText" type="RichTextLabel" parent="CreditsPanel" unique_id=1654920903]
+layout_mode = 2
+bbcode_enabled = true

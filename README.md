@@ -9,3 +9,6 @@
 ## Команда👩🏻‍💻
 - S1dorok
 - 6apa
+
+<!-- CONTRIBUTORS_STATS:START -->
+<!-- CONTRIBUTORS_STATS:END -->

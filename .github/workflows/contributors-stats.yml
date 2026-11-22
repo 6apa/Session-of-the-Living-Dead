@@ -1,0 +1,88 @@
+name: Update Contributors Stats
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Fetch contributors and update README.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO_SLUG: ${{ github.repository }}
+        run: |
+          python3 - << 'PY'
+          import json
+          import os
+          import urllib.request
+
+          repo = os.environ["REPO_SLUG"]
+          token = os.environ["GITHUB_TOKEN"]
+          url = f"https://api.github.com/repos/{repo}/contributors?per_page=100"
+
+          req = urllib.request.Request(
+              url,
+              headers={
+                  "Authorization": f"Bearer {token}",
+                  "Accept": "application/vnd.github+json",
+                  "User-Agent": "Session-of-the-Living-Dead-Stats-Bot",
+              },
+          )
+
+          with urllib.request.urlopen(req, timeout=20) as resp:
+              data = json.loads(resp.read().decode("utf-8"))
+
+          total = sum(int(item.get("contributions", 0)) for item in data if isinstance(item, dict))
+          if total <= 0:
+              raise SystemExit(0)
+
+          lines = ["### Вклад по коммитам", ""]
+          for item in data:
+              if not isinstance(item, dict):
+                  continue
+              login = item.get("login", "unknown")
+              commits = int(item.get("contributions", 0))
+              share = (commits / total) * 100.0
+              lines.append(f"- **{login}** — `{share:.1f}%` ({commits} комм.)")
+
+          block = "\n".join(lines)
+
+          with open("README.md", "r", encoding="utf-8") as f:
+              content = f.read()
+
+          start_marker = "<!-- CONTRIBUTORS_STATS:START -->"
+          end_marker = "<!-- CONTRIBUTORS_STATS:END -->"
+          if start_marker not in content or end_marker not in content:
+              raise SystemExit("Markers not found in README.md")
+
+          before, rest = content.split(start_marker, 1)
+          _, after = rest.split(end_marker, 1)
+          new_content = f"{before}{start_marker}\n{block}\n{end_marker}{after}"
+
+          with open("README.md", "w", encoding="utf-8") as f:
+              f.write(new_content)
+          PY
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet README.md; then
+            echo "No changes in README.md"
+            exit 0
+          fi
+          git add README.md
+          git commit -m "docs: update contributor share in README"
+          git push
