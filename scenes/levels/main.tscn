@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://duyevq05l72n1"]
 
 [ext_resource type="PackedScene" uid="uid://dee7hi2j3ud03" path="res://scenes/entities/player/player.tscn" id="1_72ix8"]
+[ext_resource type="PackedScene" uid="uid://lotchvd5xus7" path="res://scenes/entities/enemies/zombie.tscn" id="2_2vj2h"]
 
 [node name="main" type="Node2D" unique_id=569222527]
 
@@ -11,3 +12,6 @@ color = Color(0, 0.17880681, 3.6098065e-08, 1)
 
 [node name="Player" parent="." unique_id=509145418 instance=ExtResource("1_72ix8")]
 position = Vector2(590, 584)
+
+[node name="Zombie" parent="." unique_id=246737521 instance=ExtResource("2_2vj2h")]
+position = Vector2(117, 124)
