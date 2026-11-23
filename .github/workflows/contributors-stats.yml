@@ -16,20 +16,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ github.ref_name }}
 
-      - name: Fetch contributors and update README.md
+      - name: Update README with contributor percentages
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO_SLUG: ${{ github.repository }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
         run: |
-          python3 - << 'PY'
+          python3 - <<'EOF'
           import json
           import os
+          import re
           import urllib.request
 
-          repo = os.environ["REPO_SLUG"]
-          token = os.environ["GITHUB_TOKEN"]
+          repo = os.environ["REPO"]
+          token = os.environ["GH_TOKEN"]
           url = f"https://api.github.com/repos/{repo}/contributors?per_page=100"
 
           req = urllib.request.Request(
@@ -37,43 +38,52 @@ jobs:
               headers={
                   "Authorization": f"Bearer {token}",
                   "Accept": "application/vnd.github+json",
-                  "User-Agent": "Session-of-the-Living-Dead-Stats-Bot",
+                  "User-Agent": "GitHub-Actions-Contributors-Stats",
               },
           )
 
           with urllib.request.urlopen(req, timeout=20) as resp:
               data = json.loads(resp.read().decode("utf-8"))
 
+          if not isinstance(data, list) or not data:
+              raise SystemExit("No contributors returned by GitHub API")
+
           total = sum(int(item.get("contributions", 0)) for item in data if isinstance(item, dict))
           if total <= 0:
-              raise SystemExit(0)
+              raise SystemExit("Total contributions is 0")
 
-          lines = ["### Вклад по коммитам", ""]
+          labels = {
+              "S1dorok": "Vladimir Sidorov (`S1dorok`)",
+              "6apa": "Бара (`6apa`)",
+          }
+
+          lines = []
           for item in data:
               if not isinstance(item, dict):
                   continue
               login = item.get("login", "unknown")
               commits = int(item.get("contributions", 0))
-              share = (commits / total) * 100.0
-              lines.append(f"- **{login}** — `{share:.1f}%` ({commits} комм.)")
+              pct = (commits / total) * 100.0
+              name = labels.get(login, f"`{login}`")
+              lines.append(f"- {name} — **{pct:.1f}%** ({commits} коммитов)")
 
           block = "\n".join(lines)
 
           with open("README.md", "r", encoding="utf-8") as f:
-              content = f.read()
+              readme = f.read()
 
-          start_marker = "<!-- CONTRIBUTORS_STATS:START -->"
-          end_marker = "<!-- CONTRIBUTORS_STATS:END -->"
-          if start_marker not in content or end_marker not in content:
-              raise SystemExit("Markers not found in README.md")
+          pattern = re.compile(
+              r"(<!-- CONTRIBUTORS_STATS:START -->\s*).*?(\s*<!-- CONTRIBUTORS_STATS:END -->)",
+              re.DOTALL,
+          )
+          if not pattern.search(readme):
+              raise SystemExit("Markers CONTRIBUTORS_STATS:START/END not found in README.md")
 
-          before, rest = content.split(start_marker, 1)
-          _, after = rest.split(end_marker, 1)
-          new_content = f"{before}{start_marker}\n{block}\n{end_marker}{after}"
+          updated = pattern.sub(rf"\g<1>{block}\g<2>", readme, count=1)
 
           with open("README.md", "w", encoding="utf-8") as f:
-              f.write(new_content)
-          PY
+              f.write(updated)
+          EOF
 
       - name: Commit and push changes
         run: |
@@ -84,5 +94,5 @@ jobs:
             exit 0
           fi
           git add README.md
-          git commit -m "docs: update contributor share in README"
+          git commit -m "docs: update contributors percentage stats"
           git push
