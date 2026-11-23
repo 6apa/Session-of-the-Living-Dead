@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   update-stats:
@@ -85,14 +86,12 @@ jobs:
               f.write(updated)
           EOF
 
-      - name: Commit and push changes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet README.md; then
-            echo "No changes in README.md"
-            exit 0
-          fi
-          git add README.md
-          git commit -m "docs: update contributors percentage stats"
-          git push
+      - name: Create Pull Request with updated README
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "docs: update contributors percentage stats"
+          branch: chore/update-contributors-stats
+          delete-branch: true
+          title: "docs: update contributors percentage stats"
+          body: "Автоматическое обновление статистики вклада контрибьюторов в `README.md`."
