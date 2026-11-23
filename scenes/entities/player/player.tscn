@@ -4,7 +4,10 @@
 [ext_resource type="Script" uid="uid://b5drj1qkf72xf" path="res://scenes/entities/player/player.gd" id="1_635qg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gyrss"]
-size = Vector2(32, 32)
+size = Vector2(14, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wv3h0"]
+size = Vector2(204, 204)
 
 [node name="Player" type="CharacterBody2D" unique_id=509145418 groups=["player"]]
 script = ExtResource("1_635qg")
@@ -13,6 +16,15 @@ script = ExtResource("1_635qg")
 texture = ExtResource("1_1hmtu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=680823671]
+position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_gyrss")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=513753877]
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=281030827]
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=153788957]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_wv3h0")
+debug_color = Color(0.74612075, 0.46286565, 1.92523e-07, 0.41960785)

@@ -8,6 +8,7 @@
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1335497635]
 offset_right = 1152.0
 offset_bottom = 648.0
+mouse_filter = 2
 color = Color(0, 0.17880681, 3.6098065e-08, 1)
 
 [node name="Player" parent="." unique_id=509145418 instance=ExtResource("1_72ix8")]
