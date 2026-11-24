@@ -1,14 +1,17 @@
 extends CharacterBody2D
 
-@export var speed: float = 80.0 
-@export var attack_range: float = 125.0 # Увеличили дистанцию
+@export var speed: float = 70.0 
+@export var attack_range: float = 30.0
 @export var damage: int = 10           
 @export var attack_cooldown: float = 1.5
 
 var player: CharacterBody2D
 var health: int = 40
 var can_attack: bool = true
-var knockback_force: float = 150.0 # Сила отскока
+var knockback_force: float = 150.0
+
+# Добавляем ссылку на анимацию
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
@@ -21,19 +24,29 @@ func _physics_process(delta: float) -> void:
 			# Идем к игроку
 			var direction = global_position.direction_to(player.global_position)
 			velocity = direction * speed
+			
+			# Отражаем спрайт влево/вправо
+			if direction.x != 0:
+				animated_sprite.scale.x = sign(direction.x)
+				
+			# Включаем анимацию ходьбы
+			if not animated_sprite.is_playing():
+				animated_sprite.play("walk")
 		else:
-			# Стоим на месте
+			# Стоим на месте и кусаем
 			velocity = Vector2.ZERO 
 			
-			# Если можем атаковать
+			# Останавливаем анимацию, когда зомби кусает
+			if animated_sprite.is_playing():
+				animated_sprite.stop()
+			
 			if can_attack:
 				attack()
 		
-		# Применяем отскок (если он есть)
+		# Применяем отскок
 		if velocity != Vector2.ZERO:
 			move_and_slide()
 		else:
-			# Если стоим, но нас толкнули — плавно тормозим
 			velocity = velocity.move_toward(Vector2.ZERO, 1000 * delta)
 			move_and_slide()
 
@@ -44,7 +57,6 @@ func attack() -> void:
 	if player.has_method("take_damage"):
 		player.take_damage(damage)
 		
-	# Отталкиваем зомби назад от игрока
 	var knockback_dir = global_position.direction_to(player.global_position) * -1
 	velocity = knockback_dir * knockback_force
 	

@@ -1,18 +1,72 @@
 [gd_scene format=3 uid="uid://lotchvd5xus7"]
 
-[ext_resource type="Texture2D" uid="uid://b0jrk7fsbe6cq" path="res://icon.svg" id="1_30j84"]
 [ext_resource type="Script" uid="uid://bs3d11gh0e8eb" path="res://scenes/entities/enemies/zombie.gd" id="1_q33wv"]
+[ext_resource type="Texture2D" uid="uid://da0e30mb56hsi" path="res://assets/sprites/photo_2026-11-24_20-02-14 (1).png" id="2_q33wv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_07ee4"]
+atlas = ExtResource("2_q33wv")
+region = Rect2(0, 0, 64, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kqv5s"]
+atlas = ExtResource("2_q33wv")
+region = Rect2(64, 0, 64, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3mxdd"]
+atlas = ExtResource("2_q33wv")
+region = Rect2(128, 0, 64, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8s5vt"]
+atlas = ExtResource("2_q33wv")
+region = Rect2(192, 0, 64, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1wyol"]
+atlas = ExtResource("2_q33wv")
+region = Rect2(256, 0, 64, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4jv3c"]
+atlas = ExtResource("2_q33wv")
+region = Rect2(320, 0, 64, 63)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wv3h0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_07ee4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kqv5s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3mxdd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8s5vt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1wyol")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4jv3c")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 3.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gyrss"]
-size = Vector2(126, 127)
+size = Vector2(19, 32)
 
 [node name="Zombie" type="CharacterBody2D" unique_id=246737521 groups=["enemies"]]
 script = ExtResource("1_q33wv")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=249225459]
-modulate = Color(1, 0, 0, 1)
-texture = ExtResource("1_30j84")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=399995815]
+position = Vector2(3.5762787e-07, 15.500002)
+scale = Vector2(0.5625, 0.65079373)
+sprite_frames = SubResource("SpriteFrames_wv3h0")
+animation = &"walk"
+frame = 4
+frame_progress = 0.25920275
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=44829705]
-position = Vector2(0, -0.5)
+position = Vector2(-1.5, 16)
 shape = SubResource("RectangleShape2D_gyrss")
