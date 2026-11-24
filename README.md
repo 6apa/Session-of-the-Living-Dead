@@ -9,7 +9,7 @@
 ## Команда👩🏻‍💻
 
 <!-- CONTRIBUTORS_STATS:START -->
-- Бара (`6apa`) — **45.8%** (11 коммитов)
-- Vladimir Sidorov (`S1dorok`) — **41.7%** (10 коммитов)
-- `github-actions[bot]` — **12.5%** (3 коммитов)
+- Бара (`6apa`) — **44.0%** (11 коммитов)
+- Vladimir Sidorov (`S1dorok`) — **40.0%** (10 коммитов)
+- `github-actions[bot]` — **16.0%** (4 коммитов)
 <!-- CONTRIBUTORS_STATS:END -->
